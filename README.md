@@ -15,3 +15,10 @@ npm install styled-components
 ~~~
 
 - Conceito de useState
+- Condicional de Exibição
+- Clico de Vida (UseEffect)
+- Separação de Componentes
+- Troca de dados entre Componentes
+- Criação de Um Simples Modal
+- React-Router-Dom
+- useParams

@@ -1,71 +1,74 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Modal from './components/Modal'
-import { SearchBox } from "./components/SearchBox";
+import React from 'react';
+// import styled from "styled-components";
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+
+import {Home} from './pages/Home'
+import {Sobre} from './pages/Sobre'
+import {Login} from './pages/Login'
+// import {Categoria} from './pages/Categoria';
+
+const isLogged = false;
+
+const PrivateRoute = ({ children, ...rest})  => {
+  return (
+    <Route {...rest}>
+      {isLogged ? children : <Redirect to="/login" />}
+    </Route>
+  );
+}
+
 
 function App() {
-  const [searchText, setSearchText] = useState("");
-   
-  const [list, setList] = useState([]);
+ 
 
-  useEffect(() => {
-    setList([
-      {title: "Não sei 1", done: false },
-      {title: "Não sei 2", done: true },
-      {title: "Não sei 3", done: true },
-    ]);
-  }, []);
-
-  function addAction(newItem){
-    let newList = [...list, {title:newItem, done:false}];
-    setList(newList);
-  }
-
-
-  function handleToogleDone(index){
-    let newList = [...list]
-
-    newList[index].done = !newList[index].done;
-
-    setList(newList)
-  }
-
+  
   return (
-    <>
-      <h1>Lista de Tarefas</h1>
-
-      <SearchBox
-        frasePadrao="Adicione um Item"
-        onEnter={addAction}
-        
-      />
-
-      <hr />
-
-      <ul>
-        {list.map((item, index) => {
-          return (
-          <li key={index}>
-            {!item.done &&
-              <del>{item.title}</del>
-            }
-            {item.done &&
-              item.title
-            }
-            <button onClick={() => handleToogleDone(index)}>
-              {!item.done && 
-                'Desfazer'
-              }
-              {item.done && 
-                'Feita'
-              }
-            </button>
-            
+   <BrowserRouter>
+    <header>
+      <h1>Meu Site Legal</h1>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+            </li>
+          <li>
+            <Link to="/sobre">Sobre</Link>
           </li>
-          )
-        })}
-      </ul>
-    </>
+         
+        </ul>
+      </nav>
+    </header>
+    <hr />
+
+    <Switch>
+
+     <Route exact path="/">
+      <Home />
+     </Route>
+
+     
+     <Route path="/login">
+      <Login />
+     </Route>
+
+     <PrivateRoute path="/sobre">
+      <Sobre />
+     </PrivateRoute>
+
+     <Route path="/quem-somos">
+      <Redirect to="/sobre"/>
+     </Route>
+
+     <Route path="*">
+       <h1>PAGINA NÃO ENCONTRADO FAMOSO 404</h1>
+     </Route>
+
+    </Switch>
+
+    <footer>
+      Todos os Direitos Reservados
+    </footer>
+   </BrowserRouter>
   );
 }
 
