@@ -22,3 +22,5 @@ npm install styled-components
 - Criação de Um Simples Modal
 - React-Router-Dom
 - useParams
+- Criação de Rotas Privadas
+- Redirecionamento 
